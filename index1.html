@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>3d框架演示</title>
+	<link rel="stylesheet" href="index.css">
+	<script type="text/javascript" src="//cdn.bootcss.com/three.js/r81/three.js"></script>
+</head>
+<body onload="init()">
+	<ul class="center">
+		<li><a href="index.html">首页</a></li>
+		<li><a href="index1.html">正交投影</a></li>
+
+	</ul>
+	<div class="center">
+		<canvas id="mainCanvas" width="400px" height="300px"></canvas>
+		<p>正交投影</p>
+	</div>
+
+	<script>
+		function init(){
+			// 加载渲染器
+			var renderer = new THREE.WebGLRenderer({
+				canvas:document.getElementById('mainCanvas')
+			});
+
+			// 未定义canvas元素时可以用以下方法生成
+			// var renderer = new THREE.WebGLRenderer();
+			// renderer.setSize(400, 300);
+			// document.getElementsByTagName('body')[0].appendChild(renderer.domElement);
+
+			// 设置渲染器背景色
+			renderer.setClearColor(0x000000); // black
+
+			// 设置场景
+			var scene = new THREE.Scene();
+
+			// 设置照相机 正交投影
+			// 正常比例 水平方向距离为4
+			// var camera = new THREE.OrthographicCamera( -2, 2, 1.5,-1.5, 1, 10 );
+			
+			// 水平方向距离为2 水平拉伸效果
+			var camera = new THREE.OrthographicCamera( -1, 1, 1.5,-1.5, 1, 10 );
+
+			camera.position.set(0,0,5);
+			scene.add(camera); // 添加到场景中
+
+			// 创建物体 非实心物体 wireframe
+			var cube = new THREE.Mesh( new THREE.CubeGeometry(1,1,1), 
+				new THREE.MeshBasicMaterial({
+					color:0xff0000,
+					wireframe:true
+				})
+			);
+			scene.add(cube);
+
+			// 渲染
+			renderer.render(scene,camera);
+		}
+	</script>
+</body>
+</html>
